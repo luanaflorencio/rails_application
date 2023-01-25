@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: app_rails_production
-  username: app_rails
-  password: <%= ENV['APP_RAILS_DATABASE_PASSWORD'] %>
+  database: 
+  username: 
+  password: <%= ENV[''] %>
