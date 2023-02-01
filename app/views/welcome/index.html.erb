@@ -1,0 +1,22 @@
+<h1>Seja bem-vinda!</h1>
+
+<%# ERB e Helper criado %>
+<p> Data de hoje: <%= date_br(Date.today)%></p>
+
+<%# redirecionamento simples com href %>
+<ul>
+    <li>
+        <a href="/coins">Cadastre suas Moedas</a>
+    </li>
+</ul>
+<%# redirecionamento "gerenciando rotas" com helper link_to do on rails %>
+<ul>
+    <li>
+        <%= link_to "Cadastre suas Moedas", coins_path%>
+    </li>
+</ul>
+
+<%# testando ERB %>
+<% l = "Alana"%>
+<p>Seu nome inervitido é: <%= l.reverse %></p>
+
