@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+ rails5:
+ image: rails:v2
+ restart: always
+
+volumes:
+ - .:/app_rails
+
+ports:
+- 3003:3000
+
+depends_on:
+ db:
+  condition: service_healthy
+
+db:
+ image: mysql:8
+ restart: always
+ environment:
+ - MYSQL_ROOT_PASSWORD=teste
+ volumes:
+  - mysql-datavolume:/var/lib/mysql
+  - ./my.cnf:/etc/my.cnf
+ ports:
+  - 3307:3306
+ healthcheck:
+ test: mysqladmin ping -h 127.0.0.1 -u root --password=teste
+ start_period: 5s
+ interval: 5s
+ timeout: 5s
+ retries: 55
+
+# volumes: 
+#  mysql-datavolume:
