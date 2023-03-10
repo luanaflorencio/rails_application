@@ -24,7 +24,7 @@ coins = [
         ]
 
 coins.each do |coin|
-    Coin.find_or_reate_by!(coin)
+    Coin.find_or_create_by!(coin)
 end
 
 spinner.succes("(Concluído)")
