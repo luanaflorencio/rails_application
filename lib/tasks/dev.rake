@@ -5,11 +5,51 @@ namespace :dev do
       msg_spinner("Apagando BD..") { %x(rails db:drop) }
       msg_spinner("Criando BD..") { %x(rails db:create) }
       msg_spinner("Migrando BD..") { %x(rails db:migrate) }
-      msg_spinner("Populando BD..") { %x(rails db:seed) }
+      %x(rails dev:add_coins)
+      %x(rails dev:add_mining_type)
     else
       puts "Você não está no ambiente de desenvolvimento"
     end
   end
+
+  desc "Cadastra moedas para popular BD"
+  task add_coins: :environment do
+    msg_spinner("Cadastrando moedas...")do
+      coins = [
+                  {
+                      description: "Dash",
+                      acronym: "DASH",
+                      url_image: "https://seeklogo.com/images/D/dash-logo-4A14989CF5-seeklogo.com.png"
+                  },
+
+                  {
+                      description: "Ethereum",
+                      acronym: "ETH",
+                      url_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png"
+                  }
+              ]
+
+      coins.each do |coin|
+          Coin.find_or_create_by!(coin)
+      end
+    end
+end
+
+desc "Cadastrando tipos demineração"
+task add_mining_type: :environment do
+  msg_spinner ("Cadastrando Tipos de Mineação") do
+  mining_types = [
+    { description: "Proof of Work", acronym: "PoW"  },
+    { description: "Proof of Sate", acronym: "PoS" },
+    { description: "Proof of Capacity", acronym:"PoC" }
+  ]
+
+  mining_types.each do |mining_type|
+    MiningType.find_or_create_by!(mining_type)
+  end
+end
+end
+
 
   def msg_spinner(msg_start, msg_end = "Concluído!")
     spinner = TTY::Spinner.new("[:spinner] #{msg_start}", format: :dots)

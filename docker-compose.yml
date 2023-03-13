@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   rails5:
-    image: rails:v3
+    image: rails-app:v2
     restart: always
 
     volumes:
@@ -11,6 +11,7 @@ services:
     ports:
      - 3003:3000
 
+    command: bundle exec puma -C config/puma.rb
     depends_on:
       db:
         condition: service_healthy
@@ -22,7 +23,7 @@ services:
     - MYSQL_ROOT_PASSWORD=teste
     volumes:
       - mysql-datavolume:/var/lib/mysql
-      # - ./my.cnf:/etc/my.cnf
+      - ./my.cnf:/etc/my.cnf
     ports:
       - 3307:3306
     healthcheck:
