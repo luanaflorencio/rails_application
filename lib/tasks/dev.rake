@@ -5,8 +5,8 @@ namespace :dev do
       msg_spinner("Apagando BD..") { %x(rails db:drop) }
       msg_spinner("Criando BD..") { %x(rails db:create) }
       msg_spinner("Migrando BD..") { %x(rails db:migrate) }
-      %x(rails dev:add_coins)
       %x(rails dev:add_mining_type)
+      %x(rails dev:add_coins)
     else
       puts "Você não está no ambiente de desenvolvimento"
     end
@@ -17,15 +17,24 @@ namespace :dev do
     msg_spinner("Cadastrando moedas...")do
       coins = [
                   {
+                      description: "Bitcoin",
+                      acronym: "BTC",
+                      url_image: "https://w7.pngwing.com/pngs/450/133/png-transparent-bitcoin-cryptocurrency-virtual-currency-decal-blockchain-info-bitcoin-text-trademark-logo.png",
+                      mining_type: MiningType.find_by(acronym: "PoW")
+                  },
+
+                  {
                       description: "Dash",
                       acronym: "DASH",
-                      url_image: "https://seeklogo.com/images/D/dash-logo-4A14989CF5-seeklogo.com.png"
+                      url_image: "https://seeklogo.com/images/D/dash-logo-4A14989CF5-seeklogo.com.png",
+                      mining_type: MiningType.all.sample
                   },
 
                   {
                       description: "Ethereum",
                       acronym: "ETH",
-                      url_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png"
+                      url_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/1257px-Ethereum_logo_2014.svg.png",
+                      mining_type: MiningType.all.sample
                   }
               ]
 
